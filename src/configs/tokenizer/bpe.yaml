@@ -1,0 +1,2 @@
+_target_: src.tokenizer.BPETokenizer
+path: data/tokenizer/bpe_8000.json # relative to the project root
