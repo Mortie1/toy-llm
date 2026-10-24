@@ -29,9 +29,12 @@ def main(config):
     else:
         device = config.inferencer.device
 
+    # tokenizer must already exist, it is never fitted during inference
+    tokenizer = instantiate(config.tokenizer)
+
     # setup data_loader instances
     # batch_transforms should be put on device
-    dataloaders, batch_transforms = get_dataloaders(config, device)
+    dataloaders, batch_transforms = get_dataloaders(config, device, tokenizer)
 
     # build model architecture, then print to console
     model = instantiate(config.model).to(device)

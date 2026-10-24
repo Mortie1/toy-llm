@@ -33,9 +33,15 @@ def main(config):
     else:
         device = config.trainer.device
 
+    # tokenizer is loaded if it exists, otherwise it is fitted on
+    # the train partition inside get_dataloaders
+    tokenizer = instantiate(config.tokenizer)
+
     # setup data_loader instances
     # batch_transforms should be put on device
-    dataloaders, batch_transforms = get_dataloaders(config, device)
+    dataloaders, batch_transforms = get_dataloaders(
+        config, device, tokenizer, allow_tokenizer_fit=True
+    )
 
     # build model architecture, then print to console
     model = instantiate(config.model).to(device)

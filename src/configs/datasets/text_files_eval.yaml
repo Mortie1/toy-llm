@@ -1,0 +1,7 @@
+test:
+  _target_: src.datasets.TextFilesDataset
+  files: "data/text/test/*.txt" # glob relative to the project root
+  part: "test"
+  block_size: 256
+  data_dir: "data/text"
+  doc_per_line: False
