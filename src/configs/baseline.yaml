@@ -2,10 +2,17 @@ defaults:
   - model: baseline
   - writer: wandb
   - metrics: example
-  - datasets: example
+  - tokenizer: bpe
+  - datasets: text_files
   - dataloader: example
-  - transforms: example
+  - transforms: none
   - _self_
+tokenizer:
+  path: data/tokenizer/bpe_${tokenizer_fit.vocab_size}.json
+tokenizer_fit: # used only if the tokenizer file does not exist
+  vocab_size: 8000 # including special tokens
+  min_count: null # null or drop chunks rarer than this before fit
+  save_counts: True # keep chunk frequencies to continue fitting later
 optimizer:
   _target_: torch.optim.Adam
   lr: 3e-4
@@ -19,7 +26,7 @@ trainer:
   log_step: 50
   n_epochs: 100
   epoch_len: 500
-  device_tensors: ["data_object", "labels"] # which tensors should be on device (ex. GPU)
+  device_tensors: ["input_ids", "labels"] # which tensors should be on device (ex. GPU)
   resume_from: null # null or path to the checkpoint dir with *.pth and config.yaml
   device: auto # device name or "auto"
   override: False # if True, will override the previous run with the same name

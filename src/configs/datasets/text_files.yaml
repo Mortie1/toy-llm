@@ -1,0 +1,14 @@
+train:
+  _target_: src.datasets.TextFilesDataset
+  files: "data/text/train/*.txt" # glob relative to the project root
+  part: "train"
+  block_size: 256
+  data_dir: "data/text"
+  doc_per_line: False
+val:
+  _target_: src.datasets.TextFilesDataset
+  files: "data/text/val/*.txt"
+  part: "val"
+  block_size: ${datasets.train.block_size}
+  data_dir: "data/text"
+  doc_per_line: False
